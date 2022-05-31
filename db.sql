@@ -36,8 +36,9 @@ LOCK TABLES `posts` WRITE;
 
 INSERT INTO `posts` (`id`, `contents`)
 VALUES
-    (1,'test post content'),
-    (2,'second post');
+    (1,'My very first blogpost'),
+    (2,'My second post'),
+    (3,'My third and last post');
 
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;

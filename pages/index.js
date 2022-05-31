@@ -1,6 +1,18 @@
+import { useEffect, useState } from 'react'
 import Head from 'next/head'
 
 export default function Home() {
+
+  const [posts, setPosts] = useState()
+  useEffect(() => {
+    async function loadPosts() {
+      const resp = await fetch('/api/posts')
+      const data = await resp.json()
+      setPosts(data)
+    }
+    loadPosts();
+  }, [])
+
   return (
     <div className="container">
       <Head>
@@ -12,6 +24,17 @@ export default function Home() {
         <h1 className="title">
           Welcome to dockerized <a href="https://nextjs.org">Next.js!</a>
         </h1>
+
+        <h2 className="posts-title">Posts</h2>
+        {!posts && <p className="posts-loading">Posts loading...</p>}
+        {posts &&
+            posts.map((posts) => {
+              return (
+                  <p key={posts.id} className="posts-item">
+                    {posts.contents}
+                  </p>
+              )
+            })}
 
         <p className="description">
           Get started by editing <code>pages/index.js</code>
@@ -67,6 +90,20 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           align-items: center;
+        }
+        
+        .posts-title {
+          font-size: 21px;
+          font-weight: 500;
+          text-decoration: underline;
+          margin: 32px 0 8px;
+        }
+        .posts-loading {
+          color: rgba(0, 0, 0, 0.4);
+          margin: 0;
+        }
+        .posts-item {
+          margin: 0 0 4px;
         }
 
         main {
