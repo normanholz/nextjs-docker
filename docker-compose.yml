@@ -1,5 +1,8 @@
 version: "3.9"
 
+volumes:
+  dbdata:
+
 services:
   blog:
     build: .
@@ -17,6 +20,8 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "true"
       MYSQL_DATABASE: test_db
     restart: unless-stopped
+    volumes:
+      - dbdata:/var/lib/mysql # persist data to dbdata volume
     ports:
       - "3306:3306"
   phpmyadmin:
