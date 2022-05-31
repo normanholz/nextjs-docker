@@ -10,4 +10,13 @@ services:
       - /app/.next
     ports:
       - "3000:3000" # port mapping host:container
+  db:
+    image: mariadb
+    container_name: db
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+      MYSQL_DATABASE: test_db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
 
