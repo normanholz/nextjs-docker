@@ -19,4 +19,15 @@ services:
     restart: unless-stopped
     ports:
       - "3306:3306"
+  phpmyadmin:
+    platform: linux/x86_64
+    image: phpmyadmin:latest
+    links:
+      - db
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
 
