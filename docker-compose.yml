@@ -24,15 +24,25 @@ services:
       - dbdata:/var/lib/mysql # persist data to dbdata volume
     ports:
       - "3306:3306"
+  db_seeder:
+    platform: linux/x86_64
+    image: mysql:latest
+    volumes:
+      - ./db.sql:/db.sql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    entrypoint: [ "bash", "-c", "sleep 10 && mysql --user=root --host=db --port=3306 test_db < /db.sql && exit" ]
+    depends_on:
+      - db
   phpmyadmin:
     platform: linux/x86_64
     image: phpmyadmin:latest
-    links:
-      - db
     restart: unless-stopped
     ports:
       - "8080:80"
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
+    depends_on:
+      - db
 
