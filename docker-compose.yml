@@ -3,6 +3,11 @@ version: "3.9"
 services:
   blog:
     build: .
+    restart: always
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
     ports:
       - "3000:3000" # port mapping host:container
 
