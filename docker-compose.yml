@@ -8,9 +8,9 @@ services:
     build: .
     restart: always
     volumes:
-      - ./:/app
-      - /app/node_modules
-      - /app/.next
+      - ./:/app # sync current folder . to /app folder in container for hot reload
+      - /app/node_modules # persist in container generated node_modules folder in volume
+      - /app/.next # persist in container generated .next folder in volume
     ports:
       - "3000:3000" # port mapping host:container
     depends_on:
